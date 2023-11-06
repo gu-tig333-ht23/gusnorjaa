@@ -35,14 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // Builds the main screen with the app bar, the list of tasks, and an add-task button.
   @override
   Widget build(BuildContext context) {
-    return Consumer<ToDoProvider>(
-      builder: (context, todoProvider, child) {
-        return Scaffold(
-          appBar: _buildAppBar(),
-          body: _buildTodoList(todoProvider),
-          floatingActionButton: _buildAddTodoButton(),
-        );
-      },
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: Consumer<ToDoProvider>(
+        builder: (context, todoProvider, child) {
+          return _buildTodoList(todoProvider);
+        },
+      ),
+      floatingActionButton: _buildAddTodoButton(),
     );
   }
 

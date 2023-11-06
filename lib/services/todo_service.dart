@@ -10,7 +10,7 @@ import 'package:tig133_1/models/todo.dart';
 const String ENDPOINT = 'https://todoapp-api.apps.k8s.gu.se';
 
 // API key for accessing the endpoint.
-const String apiKey = 'c9cbcbb8-846c-4b11-b74f-723f5eb434a3';
+const String apiKey = 'f4a4f479-771b-4166-9aa9-d72a76dae97d';
 
 class TodoService {
   

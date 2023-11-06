@@ -44,43 +44,76 @@ class ToDoProvider with ChangeNotifier {
 
   // Method to fetch all todos from the API.
   Future<void> fetchTodos() async {
+  try {
     _todos = await _todoService.fetchTodos();
     notifyListeners();
+  } catch (error) {
+    if (kDebugMode) {
+      print('Error fetching todos: $error');
+    }
   }
+}
+
 
   // Method to add a todo using the API and refresh the list.
   Future<void> addTodo(Todo todo) async {
+  try {
     await _todoService.addTodo(todo);
     await fetchTodos(); 
+  } catch (error) {
+    if (kDebugMode) {
+      print('Error adding todo: $error');
+    }
   }
+}
+
 
   // Method to toggle the completion status of a todo.
   Future<void> toggleDone(String id) async {
-    int index = _todos.indexWhere((todo) => todo.id == id);
-    if (index != -1) {
+  int index = _todos.indexWhere((todo) => todo.id == id);
+  if (index != -1) {
+    try {
       _todos[index].done = !_todos[index].done;
       await _todoService.updateTodo(_todos[index]); 
       notifyListeners();
+    } catch (error) {
+      if (kDebugMode) {
+        print('Error toggling todo completion: $error');
+      }
     }
   }
+}
+
 
   // Method to delete a todo based on its ID.
   Future<void> deleteTodo(String id) async {
     int index = _todos.indexWhere((todo) => todo.id == id);
     if (index != -1) {
+      try {
+      await _todoService.deleteTodo(id); 
       _todos.removeAt(index);
-      notifyListeners();  
-      await _todoService.deleteTodo(id);  
+      notifyListeners();   
+      } catch (error) {
+        if (kDebugMode) {
+          print('Error deleting todo: $error');
+        }
+      }
     }
   }
 
   // Method to update an existing todo.
   Future<void> updateTodo(Todo todo) async {
-    int index = _todos.indexWhere((t) => t.id == todo.id);
-    if (index != -1) {
+  int index = _todos.indexWhere((t) => t.id == todo.id);
+  if (index != -1) {
+    try {
       _todos[index] = todo;
       await _todoService.updateTodo(todo); 
       notifyListeners();
+    } catch (error) {
+      if (kDebugMode) {
+        print('Error updating todo: $error');
+      }
     }
   }
+}
 }
